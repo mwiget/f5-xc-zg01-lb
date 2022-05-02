@@ -1,0 +1,16 @@
+projectPrefix = "zg"
+siteName = "zg01"
+namespace = "mwdcg"
+
+# production tenant: (playground.console)
+#volterraUrl = "https://playground.console.ves.volterra.io/api"
+#volterraP12 = "/home/mwiget/playground.console.ves.volterra.io.api-creds.p12"
+
+# production tenant: (freemium account)
+#volterraUrl = "https://console.ves.volterra.io/api"
+#volterraP12 = "/home/mwiget/.water.ves.volterra.io.api-creds.p12"
+
+# staging tenant:
+volterraUrl = "https://playground.staging.volterra.us/api"
+volterraP12 = "/home/mwiget/playground.staging.api-creds.p12"
+volterraCaCert = "/home/mwiget/.ves-internal/staging/cacerts/public_server_ca.crt"
