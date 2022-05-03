@@ -64,5 +64,4 @@ resource "volterra_tcp_loadbalancer" "ssh-ryzen2" {
       }
     }
   }
-  # depends_on = [ volterra_origin_pool.ssh-ryzen2 ]
 }

@@ -65,5 +65,4 @@ resource "volterra_tcp_loadbalancer" "ssh-perf1-vip" {
       }
     }
   }
-  # depends_on = [ volterra_origin_pool.ssh-perf1-vip ]
 }
