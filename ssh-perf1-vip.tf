@@ -1,5 +1,5 @@
-resource "volterra_origin_pool" "ssh-perf1" {
-  name                   = format("%s-ssh-perf1", var.projectPrefix)
+resource "volterra_origin_pool" "ssh-perf1-vip" {
+  name                   = format("%s-ssh-perf1-vip", var.projectPrefix)
   namespace              = var.namespace
   endpoint_selection     = "LOCAL_PREFERRED"
   loadbalancer_algorithm = "LB_OVERRIDE"
@@ -19,12 +19,12 @@ resource "volterra_origin_pool" "ssh-perf1" {
   }
 
   healthcheck {
-    name = format("%s-ssh-perf1", var.projectPrefix)
+    name = format("%s-ssh-perf1-vip", var.projectPrefix)
   }
 }
 
-resource "volterra_healthcheck" "ssh-perf1" {
-  name      = format("%s-ssh-perf1", var.projectPrefix)
+resource "volterra_healthcheck" "ssh-perf1-vip" {
+  name      = format("%s-ssh-perf1-vip", var.projectPrefix)
   namespace = var.namespace
 
   tcp_health_check {
@@ -39,8 +39,8 @@ resource "volterra_healthcheck" "ssh-perf1" {
   jitter_percent      = 30
 }
 
-resource "volterra_tcp_loadbalancer" "ssh-perf1" {
-  name      = format("%s-ssh-perf1", var.projectPrefix)
+resource "volterra_tcp_loadbalancer" "ssh-perf1-vip" {
+  name      = format("%s-ssh-perf1-vip", var.projectPrefix)
   namespace = var.namespace
 
   dns_volterra_managed = false
@@ -48,7 +48,7 @@ resource "volterra_tcp_loadbalancer" "ssh-perf1" {
   origin_pools_weights {
     pool {
       namespace = var.namespace
-      name = volterra_origin_pool.ssh-perf1.name
+      name = volterra_origin_pool.ssh-perf1-vip.name
     }
   }
 
@@ -57,6 +57,7 @@ resource "volterra_tcp_loadbalancer" "ssh-perf1" {
       port = 1011
       site {
         network = "SITE_NETWORK_OUTSIDE"
+        ip = "94.231.81.88"
         site {
           name = var.siteName
           namespace = "system"
@@ -64,5 +65,5 @@ resource "volterra_tcp_loadbalancer" "ssh-perf1" {
       }
     }
   }
-  depends_on = [ volterra_origin_pool.ssh-perf1 ]
+  depends_on = [ volterra_origin_pool.ssh-perf1-vip ]
 }

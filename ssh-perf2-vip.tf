@@ -1,5 +1,5 @@
-resource "volterra_origin_pool" "ssh-perf1" {
-  name                   = format("%s-ssh-perf1", var.projectPrefix)
+resource "volterra_origin_pool" "ssh-perf2-vip" {
+  name                   = format("%s-ssh-perf2-vip", var.projectPrefix)
   namespace              = var.namespace
   endpoint_selection     = "LOCAL_PREFERRED"
   loadbalancer_algorithm = "LB_OVERRIDE"
@@ -8,7 +8,7 @@ resource "volterra_origin_pool" "ssh-perf1" {
 
   origin_servers {
     private_ip {
-      ip = "192.168.2.176"
+      ip = "192.168.2.192"
         site_locator {
           site {
             namespace = "system"
@@ -19,12 +19,12 @@ resource "volterra_origin_pool" "ssh-perf1" {
   }
 
   healthcheck {
-    name = format("%s-ssh-perf1", var.projectPrefix)
+    name = format("%s-ssh-perf2-vip", var.projectPrefix)
   }
 }
 
-resource "volterra_healthcheck" "ssh-perf1" {
-  name      = format("%s-ssh-perf1", var.projectPrefix)
+resource "volterra_healthcheck" "ssh-perf2-vip" {
+  name      = format("%s-ssh-perf2-vip", var.projectPrefix)
   namespace = var.namespace
 
   tcp_health_check {
@@ -39,8 +39,8 @@ resource "volterra_healthcheck" "ssh-perf1" {
   jitter_percent      = 30
 }
 
-resource "volterra_tcp_loadbalancer" "ssh-perf1" {
-  name      = format("%s-ssh-perf1", var.projectPrefix)
+resource "volterra_tcp_loadbalancer" "ssh-perf2-vip" {
+  name      = format("%s-ssh-perf2-vip", var.projectPrefix)
   namespace = var.namespace
 
   dns_volterra_managed = false
@@ -48,14 +48,15 @@ resource "volterra_tcp_loadbalancer" "ssh-perf1" {
   origin_pools_weights {
     pool {
       namespace = var.namespace
-      name = volterra_origin_pool.ssh-perf1.name
+      name = volterra_origin_pool.ssh-perf2-vip.name
     }
   }
 
   advertise_custom {
     advertise_where {
-      port = 1011
+      port = 1012
       site {
+        ip = "94.231.81.88"
         network = "SITE_NETWORK_OUTSIDE"
         site {
           name = var.siteName
@@ -64,5 +65,5 @@ resource "volterra_tcp_loadbalancer" "ssh-perf1" {
       }
     }
   }
-  depends_on = [ volterra_origin_pool.ssh-perf1 ]
+  depends_on = [ volterra_origin_pool.ssh-perf2-vip ]
 }
