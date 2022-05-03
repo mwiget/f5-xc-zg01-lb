@@ -57,6 +57,7 @@ resource "volterra_tcp_loadbalancer" "ssh-perf1" {
       port = 1011
       site {
         network = "SITE_NETWORK_OUTSIDE"
+        # ip = "94.231.81.88"
         site {
           name = var.siteName
           namespace = "system"
