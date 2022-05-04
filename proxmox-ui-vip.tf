@@ -1,5 +1,5 @@
-resource "volterra_origin_pool" "proxmox-ui-epyc1" {
-  name                   = format("%s-proxmox-ui-epyc1", var.projectPrefix)
+resource "volterra_origin_pool" "proxmox-ui-vip" {
+  name                   = format("%s-proxmox-ui-vip", var.projectPrefix)
   namespace              = var.namespace
   endpoint_selection     = "LOCAL_PREFERRED"
   loadbalancer_algorithm = "LB_OVERRIDE"
@@ -19,12 +19,12 @@ resource "volterra_origin_pool" "proxmox-ui-epyc1" {
   }
 
   healthcheck {
-    name = format("%s-proxmox-ui-epyc1", var.projectPrefix)
+    name = format("%s-proxmox-ui-vip", var.projectPrefix)
   }
 }
 
-resource "volterra_healthcheck" "proxmox-ui-epyc1" {
-  name      = format("%s-proxmox-ui-epyc1", var.projectPrefix)
+resource "volterra_healthcheck" "proxmox-ui-vip" {
+  name      = format("%s-proxmox-ui-vip", var.projectPrefix)
   namespace = var.namespace
 
   tcp_health_check {
@@ -39,8 +39,8 @@ resource "volterra_healthcheck" "proxmox-ui-epyc1" {
   jitter_percent      = 30
 }
 
-resource "volterra_tcp_loadbalancer" "proxmox-ui-epyc1" {
-  name      = format("%s-proxmox-ui-epyc1", var.projectPrefix)
+resource "volterra_tcp_loadbalancer" "proxmox-ui-vip" {
+  name      = format("%s-proxmox-ui-vip", var.projectPrefix)
   namespace = var.namespace
 
   dns_volterra_managed = false
@@ -48,7 +48,7 @@ resource "volterra_tcp_loadbalancer" "proxmox-ui-epyc1" {
   origin_pools_weights {
     pool {
       namespace = var.namespace
-      name = volterra_origin_pool.proxmox-ui-epyc1.name
+      name = volterra_origin_pool.proxmox-ui-vip.name
     }
   }
 
@@ -57,6 +57,7 @@ resource "volterra_tcp_loadbalancer" "proxmox-ui-epyc1" {
       port = 8006
       site {
         network = "SITE_NETWORK_OUTSIDE"
+        ip = "94.231.81.88"
         site {
           name = var.siteName
           namespace = "system"
@@ -64,5 +65,4 @@ resource "volterra_tcp_loadbalancer" "proxmox-ui-epyc1" {
       }
     }
   }
-  depends_on = [ volterra_origin_pool.proxmox-ui-epyc1 ]
 }
