@@ -17,3 +17,9 @@ and using a VIP:
 | perf1   | ssh -p 1011 ubuntu@94.231.81.88     | 192.168.2.176 |
 | perf2   | ssh -p 1012 ubuntu@94.231.81.88     | 192.168.2.192 |
 
+Making Proxmox Console UI available externally:
+
+| host    | URL                        | internal IP   | internal Port |
+| ------- | ---------------------------| ------------- | ------------- |
+| epyc1   | https://94.231.81.88:8006  | 192.168.2.100 | 8006          |
+
