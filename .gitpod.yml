@@ -1,3 +1,4 @@
+# can't use custom image until this issue is fixed: https://github.com/gitpod-io/gitpod/issues/10221 
 #image:
 #  file: .gitpod.Dockerfile
   
