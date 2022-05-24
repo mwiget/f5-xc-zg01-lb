@@ -9,6 +9,8 @@ tasks:
       sudo mv terragrunt /usr/local/bin/
       terraform init
     command: |
+      echo $PLAYGROUND_STAGING_P12 |base64 -d > playground.staging.api-creds.p12
+      echo $PUBLIC_SERVER_CA |base64 -d > public_server_ca.crt
       terraform apply --auto-approve  
     
 # List the ports to expose. Learn more https://www.gitpod.io/docs/config-ports/
