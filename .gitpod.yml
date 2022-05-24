@@ -1,12 +1,9 @@
+image:
+  file: .gitpod.Dockerfile
+  
 # List the start up tasks. Learn more https://www.gitpod.io/docs/config-start-tasks/
 tasks:
   - init: |
-      curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
-       sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-       sudo apt-get update && sudo apt-get install terraform
-       wget -O terragrunt https://github.com/gruntwork-io/terragrunt/releases/download/v0.37.1/terragrunt_linux_amd64
-      chmod +rx terragrunt
-      sudo mv terragrunt /usr/local/bin/
       terraform init
     command: |
       echo $PLAYGROUND_STAGING_P12 |base64 -d > playground.staging.api-creds.p12
