@@ -64,4 +64,5 @@ resource "volterra_tcp_loadbalancer" "ssh-perf1" {
       }
     }
   }
+  depends_on = [volterra_origin_pool.ssh-perf1]
 }
