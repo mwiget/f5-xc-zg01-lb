@@ -1,4 +1,5 @@
 *tfstate*
+*.crt
 *.bak
 *.json
 .terraform.lock.hcl
